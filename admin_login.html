@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="GrossEry Market - Admin Girişi">
+
+    <title>Admin Girişi</title>
+
+    <link rel="shortcut icon" type="image/png" href="assets/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <style>
+        body {
+            background-color: #051922; 
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            position: relative; /* Logo konumu */
+        }
+
+        /* Logo konum ayarı */
+        .page-logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+        }
+        .page-logo img {
+            max-width: 180px;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .admin-header i {
+            font-size: 28px;
+            color: #ed1717; 
+            margin-right: 15px;
+        }
+        .admin-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #051922;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            background-color: #f9f9f9;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+        .login-box input:focus {
+            border-color: #ed1717; 
+            outline: none;
+            background-color: #fff;
+        }
+        .login-btn {
+            background-color: #ed1717; 
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+            width: 100%;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        .login-btn:hover {
+            background-color: #051922; 
+        }
+        .back-home {
+            margin-top: 25px;
+            display: inline-block;
+            color: #888;
+            font-size: 14px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            color: #ed1717; 
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="page-logo">
+        <a href="index.html">
+            <img src="assets/img/logo.png" alt="GrossEry Logo">
+        </a>
+    </div>
+
+    <div class="login-box">
+        <div class="admin-header">
+            <i class="fas fa-user-shield"></i>
+            <h2>Admin Girişi</h2>
+        </div>
+
+        <form onsubmit="event.preventDefault(); checkLogin();">
+            <input type="text" id="username" placeholder="Kullanıcı Adı" required>
+            <input type="password" id="password" placeholder="Şifre" required>
+            <button type="submit" class="login-btn">Giriş Yap</button>
+        </form>
+
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Ana Sayfaya Dön</a>
+    </div>
+
+    <script>
+        function checkLogin() {
+            var u = document.getElementById("username").value;
+            var p = document.getElementById("password").value;
+
+            if (u === "admin" && p === "efe1234") {
+                window.location.href = "admin_panel.html"; 
+            } else {
+                alert("Hatalı Giriş!!!");
+            }
+        }
+    </script>
+
+</body>
+</html>

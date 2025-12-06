@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="GrossEry Market - Yönetim Paneli">
+
+    <title>Yönetim Paneli</title>
+
+    <link rel="shortcut icon" type="image/png" href="assets/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* SOL MENÜ (SIDEBAR) */
+        .sidebar {
+            width: 260px;
+            background-color: #051922;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            color: #fff;
+            padding-top: 30px;
+            z-index: 1000;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-header img {
+            max-width: 140px;
+        }
+        .sidebar-header h4 {
+            color: #fff;
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 15px 30px;
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 15px;
+            border-left: 5px solid transparent;
+            cursor: pointer;
+        }
+        .menu-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+        .menu-item:hover, .menu-item.active {
+            background-color: #0b2832;
+            color: #fff;
+            border-left-color: #ed1717; 
+            text-decoration: none;
+        }
+
+        /* SAĞ TARAF (İÇERİK) */
+        .main-content {
+            margin-left: 260px;
+            padding: 40px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-header h2 {
+            color: #051922;
+            font-weight: 700;
+        }
+        .admin-info {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .admin-info i {
+            font-size: 20px;
+            color: #ed1717;
+            margin-right: 10px;
+        }
+
+        /* GİZLE / GÖSTER CLASSLARI */
+        .admin-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .admin-section.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* KART STİLLERİ */
+        .stat-card, .admin-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .admin-card {
+            padding: 35px;
+        }
+        .stat-icon {
+            font-size: 40px;
+            color: #ed1717;
+            background: #ffe5e5;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .stat-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #051922;
+            margin: 0;
+        }
+        .stat-info p {
+            color: #888;
+            margin: 0;
+        }
+
+        .card-header-custom {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+        .card-header-custom i {
+            font-size: 24px;
+            color: #ed1717;
+            margin-right: 15px;
+            background: #ffe5e5;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        .card-header-custom h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #051922;
+        }
+
+        /* INPUT STİLLERİ */
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .form-control-custom {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .form-control-custom:focus {
+            border-color: #ed1717;
+            outline: none;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(237, 23, 23, 0.1);
+        }
+        
+        .file-upload-wrapper {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            background: #fafafa;
+            position: relative;
+        }
+        .file-upload-wrapper:hover {
+            border-color: #ed1717;
+            background: #fff;
+        }
+        .file-upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* BUTONLAR */
+        .save-btn {
+            background-color: #ed1717;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .save-btn:hover {
+            background-color: #051922;
+            color: #fff;
+        }
+        /* İptal Butonu Stili */
+        .btn-cancel {
+            background-color: #fff;
+            color: #ed1717;
+            border: 2px solid #ed1717;
+            margin-right: 10px;
+        }
+        .btn-cancel:hover {
+            background-color: #ed1717;
+            color: #fff;
+        }
+
+        /* SİPARİŞ TABLOSU STİLLERİ */
+        .order-box {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .order-header {
+            background-color: #051922;
+            color: #fff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .status-new { background-color: #ed1717; color: #fff; }
+        .status-completed { background-color: #28a745; color: #fff; }
+        .status-cancelled { background-color: #555; color: #fff; } /* İptal Rengi */
+        
+        .order-body {
+            padding: 25px;
+        }
+        .billing-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .billing-info h5 { color: #ed1717; font-weight: 700; margin-bottom: 15px; }
+        .billing-info p { margin: 5px 0; color: #555; font-size: 14px; }
+        
+        .order-table { width: 100%; border-collapse: collapse; }
+        .order-table th { text-align: left; padding: 10px; border-bottom: 2px solid #eee; color: #051922; }
+        .order-table td { padding: 12px 10px; border-bottom: 1px solid #f0f0f0; color: #555; }
+        .total-row td { font-weight: bold; color: #ed1717; font-size: 18px; border-top: 2px solid #eee; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/img/logo.png" alt="Logo"> <h4>Yönetim Paneli</h4>
+        </div>
+        <div class="sidebar-menu">
+            <a onclick="showSection('dashboard', this)" class="menu-item active"><i class="fas fa-home"></i> Ana Panel</a>
+            <a onclick="showSection('siparisler', this)" class="menu-item"><i class="fas fa-shopping-bag"></i> Siparişler</a>
+            <a onclick="showSection('urun-ekle', this)" class="menu-item"><i class="fas fa-box-open"></i> Ürün Yönetimi</a>
+            <a onclick="showSection('kampanya-ekle', this)" class="menu-item"><i class="fas fa-bullhorn"></i> Kampanyalar</a>
+            <a href="index.html" class="menu-item" style="margin-top: 50px; color: #ed1717;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="page-header">
+            <h2 id="page-title">Genel Bakış</h2>
+            <div class="admin-info">
+                <i class="fas fa-user-circle"></i>
+                <span>admin</span>
+            </div>
+        </div>
+
+        <div id="dashboard" class="admin-section show">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>150</h3>
+                            <p>Tamamlanan Sipariş</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>25</h3>
+                            <p>Kayıtlı Ürün</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-box"></i></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>2</h3>
+                            <p>Aktif Sipariş</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-shipping-fast"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Hızlı İşlemler</h3>
+                </div>
+                <p>Hoşgeldiniz admin! soldaki menüden siparişleri inceleyebilir, yeni ürün ekleyebilir veya kampanya oluşturabilirsiniz.</p>
+            </div>
+        </div>
+
+        <div id="siparisler" class="admin-section">
+            <div class="admin-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-list-ul"></i>
+                    <h3>Gelen Siparişler</h3>
+                </div>
+
+                <div class="order-box" id="order-box-1">
+                    <div class="order-header">
+                        <span><strong>Sipariş No:</strong> #12345</span>
+                        <span>10 Dakika Önce</span>
+                        <span class="order-status status-new" id="status-badge-1">Yeni Sipariş</span>
+                    </div>
+                    <div class="order-body">
+                        <div class="row">
+                            <div class="col-md-4 billing-info">
+                                <h5><i class="fas fa-user"></i> Müşteri Bilgileri</h5>
+                                <p><strong>Ad Soyad:</strong> Ahmet Yılmaz</p>
+                                <p><strong>Telefon:</strong> 0555 123 45 67</p>
+                                <p><strong>Adres:</strong> Ulukavak Mh. Köprübaşı Sk. No:5 Çorum/Merkez</p>
+                                <p><strong>Not:</strong> Zili çalmayın lütfen.</p>
+                            </div>
+                            <div class="col-md-8">
+                                <h5><i class="fas fa-shopping-basket"></i> Sepet İçeriği</h5>
+                                <table class="order-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Ürün Adı</th>
+                                            <th>Birim Fiyat</th>
+                                            <th>Adet</th>
+                                            <th>Tutar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tam Yağlı Süt</td>
+                                            <td>50 TL</td>
+                                            <td>2</td>
+                                            <td>100 TL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Somun Ekmek 200 Gram</td>
+                                            <td>12.50 TL</td>
+                                            <td>3</td>
+                                            <td>37.50 TL</td>
+                                        </tr>
+                                        <tr class="total-row">
+                                            <td colspan="3" style="text-align:right">Genel Toplam:</td>
+                                            <td>137.50 TL</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="margin-top:20px; text-align:right;" id="action-buttons-1">
+                                    <button class="save-btn btn-cancel" onclick="openCancelModal(this, 'status-badge-1')">
+                                        <i class="fas fa-times"></i> İptal Et
+                                    </button>
+                                    
+                                    <button class="save-btn" onclick="approveOrder(this, 'status-badge-1')">
+                                        <i class="fas fa-check"></i> Siparişi Onayla
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-box">
+                    <div class="order-header" style="background-color:#444;">
+                        <span><strong>Sipariş No:</strong> #12344</span>
+                        <span>1 Saat Önce</span>
+                        <span class="order-status status-completed">Tamamlandı</span>
+                    </div>
+                    <div class="order-body">
+                        <div class="row">
+                            <div class="col-md-4 billing-info">
+                                <h5><i class="fas fa-user"></i> Müşteri Bilgileri</h5>
+                                <p><strong>Ad Soyad:</strong> Ayşe Demir</p>
+                                <p><strong>Telefon:</strong> 0532 987 65 43</p>
+                                <p><strong>Adres:</strong> Bahçelievler Mh. 2. Cadde Çorum</p>
+                            </div>
+                            <div class="col-md-8">
+                                <h5><i class="fas fa-shopping-basket"></i> Sepet İçeriği</h5>
+                                <table class="order-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Ürün Adı</th>
+                                            <th>Birim Fiyat</th>
+                                            <th>Adet</th>
+                                            <th>Tutar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ketçaplı Cips</td>
+                                            <td>50 TL</td>
+                                            <td>1</td>
+                                            <td>50 TL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Didi Soğuk Çay</td>
+                                            <td>60 TL</td>
+                                            <td>2</td>
+                                            <td>120 TL</td>
+                                        </tr>
+                                        <tr class="total-row">
+                                            <td colspan="3" style="text-align:right">Genel Toplam:</td>
+                                            <td>170 TL</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="urun-ekle" class="admin-section">
+            <div class="admin-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-plus"></i>
+                    <h3>Yeni Ürün Ekle</h3>
+                </div>
+                <form onsubmit="event.preventDefault(); showSuccess('Ürün');">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Ürün Adı</label>
+                            <input type="text" class="form-control-custom" placeholder="Örn: Tam Yağlı Süt" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Kategori</label>
+                            <select class="form-control-custom">
+                                <option>Meyve</option>
+                                <option>Sebze</option>
+                                <option>Süt Ürünleri</option>
+                                <option>Atıştırmalık/İçecek</option>
+                                <option>Temizlik</option>
+                                <option>Bakliyat</option>
+                                <option>Ekmek</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Fiyat (TL)</label>
+                            <input type="number" class="form-control-custom" placeholder="0.00" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Ürün Açıklaması</label>
+                            <input type="text" class="form-control-custom" placeholder="Kısa açıklama yazın..." required>
+                        </div>
+                    </div>
+                    <label>Ürün Görseli</label>
+                    <div class="file-upload-wrapper">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 30px; color: #ccc;"></i>
+                        <p id="file-text-1" style="margin: 10px 0 0; color: #888;">Resmi buraya sürükleyin veya tıklayın</p>
+                        <input type="file" class="file-upload-input" onchange="fileSelected(this, 'file-text-1')">
+                    </div>
+                    <button type="submit" class="save-btn"><i class="fas fa-check"></i> Ürünü Kaydet</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="kampanya-ekle" class="admin-section">
+            <div class="admin-card">
+                <div class="card-header-custom">
+                    <i class="fas fa-bullhorn"></i>
+                    <h3>Yeni Kampanya / Duyuru Ekle</h3>
+                </div>
+                <form onsubmit="event.preventDefault(); showSuccess('Kampanya');">
+                    <label>Kampanya Başlığı</label>
+                    <input type="text" class="form-control-custom" placeholder="Örn: Hafta Sonu İndirimi" required>
+                    
+                    <label>Kampanya Detayı / İçerik</label>
+                    <textarea rows="4" class="form-control-custom" placeholder="Kampanya detaylarını buraya yazınız..."></textarea>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Başlangıç Tarihi</label>
+                            <input type="date" class="form-control-custom">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Bitiş Tarihi</label>
+                            <input type="date" class="form-control-custom">
+                        </div>
+                    </div>
+
+                    <label>Dosya Ekle (Resim, PDF veya Word)</label>
+                    <div class="file-upload-wrapper">
+                        <i class="fas fa-file-upload" style="font-size: 30px; color: #ccc;"></i>
+                        <p id="file-text-2" style="margin: 10px 0 0; color: #888;">Dosya seçmek için tıklayın (jpg, png, pdf, docx)</p>
+                        <input type="file" class="file-upload-input" accept=".jpg,.png,.pdf,.docx" onchange="fileSelected(this, 'file-text-2')">
+                    </div>
+
+                    <button type="submit" class="save-btn"><i class="fas fa-paper-plane"></i> Kampanyayı Yayınla</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Siparişi İptal Et</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Bu siparişi iptal etmek istediğinize emin misiniz?</p>
+            <label>İptal Sebebi:</label>
+            <textarea id="cancel-reason" class="form-control-custom" rows="3" placeholder="Örn: Stok yetersiz, Müşteri vazgeçti..."></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+            <button type="button" class="btn btn-danger" onclick="completeCancellation()" style="background-color:#ed1717; border:none; padding:10px 20px; color:white; border-radius:5px;">İptali Onayla</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        // Değişkenler (Hangi sipariş üzerinde işlem yapıldığını tutar)
+        var activeCancelBtn = null;
+        var activeStatusId = null;
+
+        function showSection(sectionId, element) {
+            var sections = document.getElementsByClassName('admin-section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('show');
+            }
+            document.getElementById(sectionId).classList.add('show');
+
+            var menuItems = document.getElementsByClassName('menu-item');
+            for (var i = 0; i < menuItems.length; i++) {
+                menuItems[i].classList.remove('active');
+            }
+            element.classList.add('active');
+
+            var title = "";
+            if(sectionId == 'dashboard') title = "Genel Bakış";
+            else if(sectionId == 'siparisler') title = "Sipariş Yönetimi";
+            else if(sectionId == 'urun-ekle') title = "Ürün Yönetimi";
+            else if(sectionId == 'kampanya-ekle') title = "Kampanya Yönetimi";
+            
+            document.getElementById('page-title').innerText = title;
+        }
+
+        // SİPARİŞ ONAYLAMA FONKSİYONU
+        function approveOrder(btn, statusId) {
+            // Yanındaki İptal butonunu bul ve gizle
+            var parentDiv = btn.parentElement;
+            var cancelBtn = parentDiv.querySelector('.btn-cancel');
+            if(cancelBtn) cancelBtn.style.display = 'none';
+
+            // Butonu güncelle
+            btn.innerHTML = '<i class="fas fa-check"></i> Sipariş Onaylandı';
+            btn.style.backgroundColor = "#28a745"; // Yeşil renk
+            btn.style.cursor = "default";
+            btn.removeAttribute("onclick"); // Tekrar tıklanamasın
+
+            // Etiketi güncelle
+            var badge = document.getElementById(statusId);
+            badge.innerText = "Sipariş Onaylandı";
+            badge.className = "order-status status-completed";
+
+            alert("Sipariş başarıyla onaylandı!");
+        }
+
+        // İPTAL MODALINI AÇMA
+        function openCancelModal(btn, statusId) {
+            activeCancelBtn = btn; // Hangi butona basıldığını kaydet
+            activeStatusId = statusId;
+            document.getElementById('cancel-reason').value = ""; // Kutuyu temizle
+            $('#cancelModal').modal('show');
+        }
+
+        // İPTAL İŞLEMİNİ TAMAMLAMA
+        function completeCancellation() {
+            var reason = document.getElementById('cancel-reason').value;
+            if(reason.trim() == "") {
+                alert("Lütfen bir iptal sebebi giriniz!");
+                return;
+            }
+
+            // Modalı kapat
+            $('#cancelModal').modal('hide');
+
+            // Yanındaki Onayla butonunu bul ve gizle
+            var parentDiv = activeCancelBtn.parentElement;
+            // Kardeş öğelerden onayla butonunu bul (genelde nextSibling olur ama garanti olsun)
+            var approveBtns = parentDiv.getElementsByTagName('button');
+            for(var i=0; i<approveBtns.length; i++) {
+                if(approveBtns[i] !== activeCancelBtn) {
+                    approveBtns[i].style.display = 'none';
+                }
+            }
+
+            // Butonu güncelle
+            activeCancelBtn.innerHTML = '<i class="fas fa-times"></i> İptal Edildi';
+            activeCancelBtn.style.backgroundColor = "#555"; // Gri renk
+            activeCancelBtn.style.borderColor = "#555";
+            activeCancelBtn.style.color = "#fff";
+            activeCancelBtn.style.cursor = "default";
+            activeCancelBtn.removeAttribute("onclick");
+
+            // Etiketi güncelle
+            var badge = document.getElementById(activeStatusId);
+            badge.innerText = "İptal Edildi";
+            badge.className = "order-status status-cancelled";
+
+            alert("Sipariş İptal Edildi!\nSebep: " + reason);
+        }
+
+        function showSuccess(tur) {
+            alert(tur + " başarıyla sisteme eklendi!\n(Not: Bu bir demo paneldir, veritabanına kayıt yapılmaz.)");
+            location.reload();
+        }
+
+        function fileSelected(input, textId) {
+            if (input.files && input.files[0]) {
+                document.getElementById(textId).innerText = "Seçilen Dosya: " + input.files[0].name;
+                document.getElementById(textId).style.color = "#ed1717";
+                document.getElementById(textId).style.fontWeight = "bold";
+            }
+        }
+    </script>
+
+</body>
+</html>
