@@ -7,7 +7,7 @@ Bu proje, **Kocaeli Üniversitesi Bilişim Sistemleri Mühendisliği** Web Tasar
 
 Hazır bir Bootstrap şablonu (Fruitkha) temel alınarak; **Yönetim Paneli**, **Dinamik Grafikler**, **Modal Yapıları** ve **Form Validasyonları** ile tamamen özelleştirilmiş ve interaktif hale getirilmiştir.
 
-🔗 **Canlı Demo (Live Preview):** [BURAYA NETLIFY LINKINI YAPIŞTIR]
+🔗 **Canlı Demo (Live Preview):https://grosserymarketwebtasarimproje.netlify.app/
 
 ---
 
